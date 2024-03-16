@@ -3,10 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"net/http"
-	"os"
-	"strings"
 )
 
 var (
@@ -44,22 +41,22 @@ func GetTabs() ([]Tab, error) {
 	return tabs, nil
 }
 
-func CountTabs() int {
-	tabs, err := GetTabs()
-	if err != nil {
-		fmt.Println("Error retrieving tabs:", err)
-		os.Exit(1)
-	}
+func CountTabs() (int, error) {
+	return 9999, nil
+	/*	tabs, err := GetTabs()
+		if err != nil {
+			return 0, err
+		}
 
-	count := 0
-	for _, tab := range tabs {
-		if tab.Type == "page" {
-			if strings.Contains(tab.Url, "park.html") || strings.HasPrefix(tab.Url, "http") {
-				count++
+		count := 0
+		for _, tab := range tabs {
+			if tab.Type == "page" {
+				if strings.Contains(tab.Url, "park.html") || strings.HasPrefix(tab.Url, "http") {
+					count++
+				}
 			}
 		}
-	}
-	return count
+		return count, nil*/
 }
 
 func main() {

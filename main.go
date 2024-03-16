@@ -2,27 +2,28 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"flag"
-	"strings"
+	"fmt"
 	"net/http"
 	"os"
+	"strings"
 )
 
 var (
 	chromeUrl *string
+	listenUrl *string
 )
 
 // Tab represents a Chrome tab.
 type Tab struct {
 	Description          string `json:"description"`
-	DevtoolsFrontendUrl string `json:"devtoolsFrontendUrl"`
+	DevtoolsFrontendUrl  string `json:"devtoolsFrontendUrl"`
 	FaviconUrl           string `json:"faviconUrl"`
 	Id                   string `json:"id"`
 	ThumbnailUrl         string `json:"thumbnailUrl"`
 	Title                string `json:"title"`
 	Type                 string `json:"type"`
-	Url                 string `json:"url"`
+	Url                  string `json:"url"`
 	WebSocketDebuggerUrl string `json:"webSocketDebuggerUrl"`
 }
 
@@ -63,8 +64,12 @@ func CountTabs() int {
 
 func main() {
 	chromeUrl = flag.String("chromeUrl", "http://localhost:9222/json", "URL for connecting to Chrome")
+	listenUrl = flag.String("listenUrl", "localhost:8090", "URL to listen on")
+
 	flag.Parse()
 
-	nbTabs := CountTabs()
-	fmt.Printf("Number of open tabs: %d\n", nbTabs)
+	server := NewServer()
+	server.SetupRoutes()
+
+	server.Run()
 }
